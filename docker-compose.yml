@@ -1,0 +1,32 @@
+---
+version: "2.1"
+services:
+
+  nginx:
+    container_name: nginx
+    hostname: nginx
+    build: ${PWD}/nginx
+    networks:
+      - stack
+    ports:
+      - 80:8080
+    volumes:
+      - ./logs/nginx/:/var/log/nginx/
+    restart: unless-stopped
+    depends_on:
+      shiny:
+        condition: service_started
+
+  shiny:
+    container_name: shiny
+    hostname: shiny
+    build: ${PWD}/shiny-server
+    networks:
+      - stack
+    volumes:
+      - ./app/shiny/:/srv/shiny-server/:ro
+      - ./logs/shiny/:/var/log/shiny-server/
+    restart: unless-stopped
+
+networks:
+  stack:
