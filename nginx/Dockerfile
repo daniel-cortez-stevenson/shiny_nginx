@@ -5,4 +5,5 @@ RUN apt-get update && apt-get --assume-yes install \
     apache2-utils
 
 COPY nginx.conf /etc/nginx/nginx.conf
+
 RUN mkdir -p /etc/nginx/cache

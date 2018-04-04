@@ -12,6 +12,7 @@ services:
       - 80:8080
     volumes:
       - ./logs/nginx/:/var/log/nginx/
+      - ./nginx/.htpasswd:/etc/nginx/.htpasswd
     restart: unless-stopped
     depends_on:
       shiny:
@@ -24,7 +25,7 @@ services:
     networks:
       - stack
     volumes:
-      - ./app/shiny/:/srv/shiny-server/:ro
+      - ./shiny-server/shiny/:/srv/shiny-server/:ro
       - ./logs/shiny/:/var/log/shiny-server/
     restart: unless-stopped
 
