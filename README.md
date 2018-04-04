@@ -1,9 +1,11 @@
 # shiny_nginx
 
 ## Usage
-* Place your app in the shiny-server/shiny directory
-* Run <pre>docker-compose up -d .</pre> from the directory containing docker-compose.yml 
+* Place your app in the shiny-server/shiny/your_app directory
+* In nginx/.htpasswd type in ${username}:${password_hash} for basic auth
+* Run <pre>docker-compose up -d</pre> from the directory containing docker-compose.yml
+* Find your app at http://localhost/app/your_app
 
 ## Shiny Details
 * Supports PDF rendering with knitr and markdown through texlive
-* Installs many packages related to data science
+* Installs and supports many packages related to data science
