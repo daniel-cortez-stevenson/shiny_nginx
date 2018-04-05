@@ -2,7 +2,7 @@ FROM r-base:3.4.3
 
 MAINTAINER danielstevenson "daniel.stevenson@charite.de"
 
-# Install dependencies and Download and install shiny server
+# Download and install shiny server. Install dependencies.
 # Modified from https://hub.docker.com/r/rocker/shiny/
 RUN apt-get update && apt-get install -y -t unstable \
     sudo \
@@ -21,8 +21,8 @@ RUN apt-get update && apt-get install -y -t unstable \
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
     rm -rf /var/lib/apt/lists/*
 
-# Install system dependencies for rpackages like curl or knitr family and related functions
-RUN apt-get update -y && apt-get install -y \
+# Install system dependencies for R packages
+RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     libmagick++-dev \
@@ -38,20 +38,23 @@ RUN apt-get update -y && apt-get install -y \
     libgdal-dev \
     libtesseract-dev \
     tesseract-ocr-eng \
-    libleptonica-dev
+    libleptonica-dev \
+    autoconf \
+    automake \
+    mesa-common-dev
 
-RUN R -e "install.packages(c('shiny', 'plyr', 'dplyr', 'tibble', 'tidyr', 'readr', 'RCurl', 'gtools', 'shinythemes', 'shinycssloaders', 'shinydashboard', 'shinyjs', 'd3heatmap', 'DT', 'scales', 'plotly', 'knitr', 'magick', 'devtools'), repos='https://cran.rstudio.com/', dependencies=TRUE)"
-RUN R -e "devtools::install_github(c('hadley/ggplot2', 'bokeh/rbokeh', 'ramnathv/htmlwidgets', 'dreamRs/shinyWidgets', 'haozhu233/kableExtra', 'rstudio/rmarkdown'))"
-
-# Latex support
-RUN apt-get update -y && apt-get install -y \
+# Latex support (through texlive)
+RUN apt-get update && apt-get install -y \
     texlive-latex-base \
     texlive-xetex
+
+# Install R packages
+RUN R -e "install.packages(c('shiny', 'plyr', 'dplyr', 'tibble', 'tidyr', 'readr', 'RCurl', 'gtools', 'shinythemes', 'shinycssloaders', 'shinydashboard', 'shinyjs', 'd3heatmap', 'DT', 'scales', 'plotly', 'knitr', 'magick', 'formattable', 'devtools'), repos='https://cran.rstudio.com/', dependencies=TRUE)"
+RUN R -e "devtools::install_github(c('rocker/shiny', 'hadley/ggplot2', 'bokeh/rbokeh', 'ramnathv/htmlwidgets', 'dreamRs/shinyWidgets', 'haozhu233/kableExtra', 'rstudio/rmarkdown'))"
 
 # Shiny HTML redirect/404 error, etc.
 RUN mkdir -p /etc/shiny-server/templates/ && \
     cp /opt/shiny-server/templates/error.html /etc/shiny-server/templates/
-
 
 EXPOSE 3838
 
