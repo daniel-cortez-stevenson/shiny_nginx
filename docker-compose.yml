@@ -5,7 +5,7 @@ services:
   nginx:
     container_name: nginx
     hostname: nginx
-    build: ${PWD}/nginx
+    image: danielstevenson/nginx4shinyr:latest
     networks:
       - stack
     ports:
@@ -21,7 +21,7 @@ services:
   shiny:
     container_name: shiny
     hostname: shiny
-    build: ${PWD}/shiny-server
+    image: danielstevenson/shinyr4datascience
     networks:
       - stack
     volumes:
