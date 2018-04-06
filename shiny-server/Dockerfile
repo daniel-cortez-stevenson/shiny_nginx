@@ -41,7 +41,9 @@ RUN apt-get update && apt-get install -y \
     libleptonica-dev \
     autoconf \
     automake \
-    mesa-common-dev
+    mesa-common-dev \
+    libspatialite-dev \
+    libsqlite3-dev
 
 # Latex support (through texlive)
 RUN apt-get update && apt-get install -y \
