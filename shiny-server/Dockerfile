@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y -t unstable \
     rm -rf /var/lib/apt/lists/*
 
 # Install system dependencies for R packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --allow-downgrades \
     libcurl4-openssl-dev \
     libssl-dev \
     libmagick++-dev \
@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install -y \
     automake \
     mesa-common-dev \
     libspatialite-dev \
+    libsqlite3-0=3.22.0-2 \
     libsqlite3-dev
 
 # Latex support (through texlive)
