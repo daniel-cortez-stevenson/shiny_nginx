@@ -25,7 +25,7 @@ services:
     networks:
       - stack
     volumes:
-      - ./shiny-server/shiny/:/srv/shiny-server/:ro
+      - ./shiny-server/:/srv/shiny-server/:ro
       - ./logs/shiny/:/var/log/shiny-server/
     restart: unless-stopped
 
